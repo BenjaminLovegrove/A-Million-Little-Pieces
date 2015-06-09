@@ -49,7 +49,7 @@ public class Player : MonoBehaviour {
 			enemyTargetPos = transform.position + bedDir * 25;
 			Invoke ("MoveToBed", 1f);
 			spotted = true;
-			Destroy (endBed, 8f);
+			Destroy (endBed, 12f);
 		}
 
 		//Hold bottle when drinking
@@ -83,7 +83,7 @@ public class Player : MonoBehaviour {
 
 		//Move slower when lerping to bed
 		if (minBedTimer > 15f) {
-			lerpSpeed = 0.1f;
+			lerpSpeed = 0.15f;
 		} else {
 			lerpSpeed = 0.5f;
 		}

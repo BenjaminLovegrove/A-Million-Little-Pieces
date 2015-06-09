@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
 	
 		//Lerp slower when moving to bed.
 		if (FTBTargAlpha == 1.1f) {
-			lerpSpeed = 0.1f;
+			lerpSpeed = 0.15f;
 		} else {
 			lerpSpeed = 0.2f;
 		}
