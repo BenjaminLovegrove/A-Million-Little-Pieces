@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour {
 
 	void Reset (){
 		speechBubble.enabled = false;
+		Camera.main.SendMessage ("FadeToBlack", 1f);
 	}
 
 	void ResetScale(){
