@@ -8,12 +8,12 @@ public class Enemy : MonoBehaviour {
 	void OnTriggerEnter (Collider col) {
 		if ((col.transform.position.x < transform.position.x) && transform.localScale.x > 0) {
 			transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y,transform.localScale.z);
-			Invoke ("ResetScale", 15f);
+			Invoke ("ResetScale", 7f);
 		}
 
 		if ((col.transform.position.x > transform.position.x) && transform.localScale.x < 0) {
 			transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y,transform.localScale.z);
-			Invoke ("ResetScale", 15f);
+			Invoke ("ResetScale", 7f);
 		}
 
 		speechBubble.enabled = true;
