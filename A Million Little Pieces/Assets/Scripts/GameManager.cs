@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
 	float FTBTargAlpha = 0f;
 	float FTBCurrentAlpha = 0f;
 	bool fadedIn = false;
-
+	float lerpSpeed;
 
 	void Start () {
 		FTB = fadeToBlack.GetComponent<Renderer> ();
@@ -23,8 +23,15 @@ public class GameManager : MonoBehaviour {
 
 	void Update () {
 	
+		//Lerp slower when moving to bed.
+		if (FTBTargAlpha == 1.1f) {
+			lerpSpeed = 0.1f;
+		} else {
+			lerpSpeed = 0.2f;
+		}
+
 		if (FTBLerp < 1f) {
-			FTBLerp += Time.deltaTime * 0.2f;
+			FTBLerp += Time.deltaTime * lerpSpeed;
 			FTBCurrentAlpha = Mathf.Lerp (FTBStartAlpha, FTBTargAlpha, FTBLerp);
 			FTB.material.SetColor ("_Color", new Color(0,0,0, FTBCurrentAlpha));
 			if ((fadedIn == false) && (FTBLerp > .9f)){

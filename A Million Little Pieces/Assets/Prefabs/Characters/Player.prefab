@@ -726,6 +726,7 @@ MonoBehaviour:
   bottle: {fileID: 21202020}
   bottleArm: {fileID: 21242612}
   normalArm: {fileID: 21285596}
+  bed: {fileID: 181098, guid: 85a3cea5640eaaa4b97eefd0f2a92cd2, type: 2}
 --- !u!124 &12483728
 Behaviour:
   m_ObjectHideFlags: 1

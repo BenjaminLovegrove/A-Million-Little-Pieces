@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
 	Animator anim;
 	AudioSource runningSFX;
 	Vector3 startPos;
+	float lerpSpeed;
 
 	//Drinking
 	bool moveLock = false;
@@ -23,6 +24,11 @@ public class Player : MonoBehaviour {
 	public SpriteRenderer bottleArm;
 	public SpriteRenderer normalArm;
 
+	//Find Bed
+	public GameObject bed;
+	Vector3 bedDir;
+	float minBedTimer = 0f;
+
 	void Start () {
 		startPos = transform.position;
 		anim = GetComponent<Animator> ();
@@ -31,6 +37,22 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		minBedTimer -= Time.deltaTime;
+		//Find bed
+		if ((Vector3.Distance (this.transform.position, startPos) > 60) && minBedTimer < 0f) {
+			minBedTimer = 25f;
+			bedDir = (transform.position - startPos).normalized;
+			Object endBed = Instantiate(bed, transform.position + bedDir * 25, Quaternion.identity);
+			LockMovement();
+			startLerpPos = transform.position;
+			enemyTargetPos = transform.position + bedDir * 25;
+			Invoke ("MoveToBed", 1f);
+			spotted = true;
+			Destroy (endBed, 8f);
+		}
+
+		//Hold bottle when drinking
 		if (holdDrink) {
 			bottle.enabled = true;
 			bottleArm.enabled = true;
@@ -59,7 +81,15 @@ public class Player : MonoBehaviour {
 			}
 		}
 
-		lerpTimer += 0.5f * Time.deltaTime;
+		//Move slower when lerping to bed
+		if (minBedTimer > 15f) {
+			lerpSpeed = 0.1f;
+		} else {
+			lerpSpeed = 0.5f;
+		}
+
+		//Lerping to drinkers
+		lerpTimer += lerpSpeed * Time.deltaTime;
 		if (lerpTimer < 1f && spotted) {
 			xDifference = Mathf.Abs(enemyTargetPos.x - transform.position.x);
 			yDifference = Mathf.Abs(enemyTargetPos.y - transform.position.y);
@@ -92,6 +122,12 @@ public class Player : MonoBehaviour {
 	void MoveTo(){
 		lerpTimer = 0f;
 		holdDrink = true;
+	}
+
+	void MoveToBed(){
+		lerpTimer = 0f;
+		Camera.main.SendMessage ("NoHangover");
+		Camera.main.SendMessage ("FadeToBlack", 1.1f);
 	}
 
 	void LockMovement(){
