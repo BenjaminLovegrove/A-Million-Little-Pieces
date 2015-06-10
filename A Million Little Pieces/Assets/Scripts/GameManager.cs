@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
 	bool fadedIn = false;
 	float lerpSpeed;
 	bool goodSleep = false;
+	bool endGame = false;
 
 	//Text messages
 	public Text txtMsg;
@@ -30,8 +31,13 @@ public class GameManager : MonoBehaviour {
 	float txtTargLerp;
 	float txtLerpTimer;
 	float txtAlpha = 0f;
+	AudioSource music;
+	float audioStartVol;
+	float audioOutTimer = 0;
+	float audioVol;
 
 	void Start () {
+		music = GetComponent<AudioSource> ();
 		txtMessages = new string[7];
 		txtMessages [0] = "Hungover AGAIN? Don't bother coming in.";
 		txtMessages [1] = "I can't believe what you did last night, we're done.";
@@ -47,6 +53,13 @@ public class GameManager : MonoBehaviour {
 	
 
 	void Update () {
+		if (endGame) {
+			audioOutTimer -= Time.deltaTime;
+			audioStartVol = music.volume;
+			audioVol = Mathf.Lerp (audioStartVol, 0f, audioOutTimer);
+			music.volume = audioVol;
+		}
+
 		txtLerpTimer += 0.2f * Time.deltaTime;
 		if (txtLerpTimer < 1f) {
 			txtAlpha = Mathf.Lerp (txtStartLerp, txtTargLerp, txtLerpTimer);
@@ -72,7 +85,6 @@ public class GameManager : MonoBehaviour {
 			if ((fadedIn == false) && (FTBLerp > .9f)){
 				fadedIn = true;
 				Invoke ("FadeIn", 2f);
-
 			}
 		}
 
@@ -89,25 +101,46 @@ public class GameManager : MonoBehaviour {
 
 	void FadeIn(){
 		AudioSource.PlayClipAtPoint (alarm, transform.position, 0.5f);
-		
+
+		if (goodSleep && hangoverState < -2) {
+			goodSleep = false;
+		}
+
 		if (!goodSleep) {
-			int RNG = Random.Range (0, txtMessages.Length);
-			txtMsg.text = txtMessages[RNG];
+			if (hangoverState > 2 || hangoverState < -2){
+				if (hangoverState > 2){
+					txtMsg.text = "Life is made up of millions of little pieces,\n \nAnd every small decision defines the life you lead.\n \nMake every piece count.";
+					endGame = true;
+					Invoke ("EndGame", 15f);
+				} else if (hangoverState < -2){
+					txtMsg.text = "Life is made up of millions of little pieces,\n \nAnd every small decision defines the life you lead.\n \nMake every piece count.";
+					endGame = true;
+					Invoke ("EndGame", 15f);
+				}
+			} else {
+				int RNG = Random.Range (0, txtMessages.Length);
+				txtMsg.text = txtMessages[RNG];
+			}
 			txtLerpTimer = 0f;
 			txtStartLerp = 0f;
 			txtTargLerp = 1f;
 			Invoke ("WipeText", 5f);
 		}
+		
 
-		variableGameObjects.BroadcastMessage ("Cycle", hangoverState, SendMessageOptions.DontRequireReceiver);
-		gameObject.SendMessageUpwards ("NewDay");
-		FTBTargAlpha = 0f;
-		FTBStartAlpha = 1f;
-		if (FTBLerp > 1f) {
-			if (goodSleep){
-				FTBLerp = 0f;
-			} else {
-				FTBLerp = -2f;
+		if (hangoverState < 2 || hangoverState > -2) {
+			variableGameObjects.BroadcastMessage ("Cycle", hangoverState, SendMessageOptions.DontRequireReceiver);
+			gameObject.SendMessageUpwards ("NewDay");
+			if (!endGame){
+				FTBTargAlpha = 0f;
+				FTBStartAlpha = 1f;
+				if (FTBLerp > 1f) {
+					if (goodSleep) {
+						FTBLerp = 0f;
+					} else {
+						FTBLerp = -2f;
+					}
+				}
 			}
 		}
 	}
@@ -117,7 +150,11 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void NoHangover(){
-		hangoverState --;
+		if (hangoverState > 0) {
+			hangoverState = -1;
+		} else {
+			hangoverState --;
+		}
 	}
 
 	void GoodSleep (bool goodSleepBool){
@@ -128,5 +165,9 @@ public class GameManager : MonoBehaviour {
 		txtLerpTimer = 0f;
 		txtStartLerp = 1f;
 		txtTargLerp = 0f;
+	}
+
+	void EndGame (){
+		Application.LoadLevel ("Menu");
 	}
 }

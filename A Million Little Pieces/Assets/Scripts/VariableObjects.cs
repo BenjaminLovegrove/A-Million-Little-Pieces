@@ -20,6 +20,12 @@ public class VariableObjects : MonoBehaviour {
 					child.gameObject.SetActive (false);
 				}
 			}
+
+			if (child.gameObject.tag == "good" && state < threshold){
+				child.gameObject.SetActive (true);
+			} else if (child.gameObject.tag == "bad" && state > threshold){
+				child.gameObject.SetActive (true);
+			}
 		}
 	}
 }

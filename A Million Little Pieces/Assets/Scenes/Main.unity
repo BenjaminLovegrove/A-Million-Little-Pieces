@@ -196,6 +196,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 428624, guid: 756ef4fd9616614438c87837924c892b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 428624, guid: 756ef4fd9616614438c87837924c892b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 430244, guid: 756ef4fd9616614438c87837924c892b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 28.3999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 430244, guid: 756ef4fd9616614438c87837924c892b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -39.2999992
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 756ef4fd9616614438c87837924c892b, type: 2}
   m_IsPrefabParent: 0
@@ -309,7 +325,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 478586, guid: ee279c9daf9c0454297a5fa93ca50c82, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11417980, guid: ee279c9daf9c0454297a5fa93ca50c82, type: 2}
       propertyPath: variableGameObjects
