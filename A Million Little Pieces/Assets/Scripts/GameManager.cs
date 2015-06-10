@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour {
 
 	void Update () {
 	
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Application.LoadLevel("Menu");
+		}
+
 		//Lerp slower when moving to bed.
 		if (FTBTargAlpha == 1.1f) {
 			lerpSpeed = 0.15f;
