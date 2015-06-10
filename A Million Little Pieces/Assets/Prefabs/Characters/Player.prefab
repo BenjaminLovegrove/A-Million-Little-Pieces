@@ -711,6 +711,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeToBlack: {fileID: 115264}
   variableGameObjects: {fileID: 0}
+  txtMsg: {fileID: 0}
+  txtMessages: []
+  alarm: {fileID: 8300000, guid: c7ad7f28b7053084bab30f629b6e3bcc, type: 3}
 --- !u!114 &11428814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -727,6 +730,8 @@ MonoBehaviour:
   bottleArm: {fileID: 21242612}
   normalArm: {fileID: 21285596}
   bed: {fileID: 181098, guid: 85a3cea5640eaaa4b97eefd0f2a92cd2, type: 2}
+  yawn: {fileID: 8300000, guid: 4cfcc7f48c2b28740aa68495626259f9, type: 3}
+  crowd: {fileID: 8300000, guid: a9343bf15f54f6e4bba93f7d5c645aee, type: 3}
 --- !u!124 &12483728
 Behaviour:
   m_ObjectHideFlags: 1

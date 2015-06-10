@@ -29,6 +29,10 @@ public class Player : MonoBehaviour {
 	Vector3 bedDir;
 	float minBedTimer = 0f;
 
+	//Sounds
+	public AudioClip yawn;
+	public AudioClip crowd;
+
 	void Start () {
 		startPos = transform.position;
 		anim = GetComponent<Animator> ();
@@ -110,6 +114,8 @@ public class Player : MonoBehaviour {
 
 	void Spotted(Vector3 enemypos){
 		if (!moveLock) {
+			AudioSource.PlayClipAtPoint (crowd, transform.position);
+			Camera.main.SendMessage ("GoodSleep", false);
 			Camera.main.SendMessage ("Hangover");
 			LockMovement ();
 			startLerpPos = transform.position;
@@ -128,6 +134,8 @@ public class Player : MonoBehaviour {
 		lerpTimer = 0f;
 		Camera.main.SendMessage ("NoHangover");
 		Camera.main.SendMessage ("FadeToBlack", 1.1f);
+		Camera.main.SendMessage ("GoodSleep", true);
+		AudioSource.PlayClipAtPoint (yawn, transform.position);
 	}
 
 	void LockMovement(){
