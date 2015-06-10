@@ -44,7 +44,7 @@ public class Player : MonoBehaviour {
 
 		minBedTimer -= Time.deltaTime;
 		//Find bed
-		if ((Vector3.Distance (this.transform.position, startPos) > 60) && minBedTimer < 0f) {
+		if ((Vector3.Distance (this.transform.position, startPos) > 100) && minBedTimer < 0f) {
 			minBedTimer = 25f;
 			bedDir = (transform.position - startPos).normalized;
 			Object endBed = Instantiate(bed, transform.position + bedDir * 25, Quaternion.identity);

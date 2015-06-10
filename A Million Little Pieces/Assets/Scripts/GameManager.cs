@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour {
 		txtMessages [5] = "You NEED to stop calling me at 4am, you're embarrassing yourself..";
 		txtMessages [6] = "Our assignment was due an hour ago. Where the hell were you last night!?";
 		FTB = fadeToBlack.GetComponent<Renderer> ();
+		variableGameObjects.BroadcastMessage ("Cycle", hangoverState, SendMessageOptions.DontRequireReceiver);
+
 	}
 	
 
